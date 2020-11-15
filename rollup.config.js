@@ -4,9 +4,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
-import seqPreprocessor from 'svelte-sequential-preprocessor';
-import autoPreprocess from 'svelte-preprocess';
-import typescript from '@rollup/plugin-typescript';import config from 'sapper/config/rollup.js';
+import sveltePreprocess from 'svelte-preprocess';
+import typescript from 'rollup-plugin-typescript2';
+import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 
 
@@ -20,15 +20,13 @@ const onwarn = (warning, onwarn) =>
 	(warning.code === 'THIS_IS_UNDEFINED') ||
 	onwarn(warning);
 
-const preprocess  = seqPreprocessor([
-	autoPreprocess({
+const preprocess = sveltePreprocess({
 		scss: {
 		},
 		postcss: {
 			plugins: [require('autoprefixer')()]
 		}
 	})
-]);
 
 export default {
 	client: {
